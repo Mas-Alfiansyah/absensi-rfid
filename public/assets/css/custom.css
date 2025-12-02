@@ -1,0 +1,81 @@
+.left-sidebar,
+.app-header {
+    top: 0 !important;
+}
+.container-fluid {
+    padding-top: 12vh !important;
+    background-color: white !important;
+}
+.modal-content {
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.bg-biru-card {
+    background-color: #676aff21;
+    color: white;
+    border: 1px solid #001f4115;
+}
+.bg-ijo-card {
+    background-color: #80ff6721;
+    color: white;
+    border: 1px solid #02410015;
+}
+.bg-merah-card {
+    background-color: #ff676721;
+    color: white;
+    border: 1px solid #41000015;
+}
+.garis {
+    border: 1px solid #bbb9b979;
+}
+.form-control {
+    border: 1px solid #d3d3d3;
+}
+.form-select {
+    border: 1px solid #d3d3d3;
+}
+.chart-container {
+    position: relative;
+    height: 160px; /* Dikurangi dari 250px */
+    min-height: 160px;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-1px); /* Efek hover lebih halus */
+}
+
+/* Styling untuk lingkaran indikator */
+.ling-sakit,
+.ling-izin,
+.ling-alpha {
+    display: inline-block;
+    width: 12px; /* Dikurangi dari ukuran default */
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.ling-sakit {
+    background-color: #0dcaf0;
+}
+
+.ling-izin {
+    background-color: #6c757d;
+}
+
+.ling-alpha {
+    background-color: #dc3545;
+}
+
+/* Judul kartu lebih kecil */
+.card-title {
+    font-size: 1.1rem;
+}
+
+.card-subtitle {
+    font-size: 0.85rem;
+}
