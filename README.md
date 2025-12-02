@@ -71,3 +71,8 @@ Siswa::factory()->count(50)->create();
 hapus semua data
 use App\Models\Siswa;
 Siswa::truncate();
+
+
+cara instal klo baru setup
+composer require maatwebsite/excel
+composer require barryvdh/laravel-dompdf
