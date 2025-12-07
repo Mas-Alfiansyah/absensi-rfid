@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Siswa;
 use App\Models\Kelas;
-use App\Http\Requests\SiswaRequest;
-use Illuminate\Support\Facades\Storage;
+use App\Services\SiswaService;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
+    protected $siswaService;
+
+    public function __construct(SiswaService $siswaService)
+    {
+        $this->siswaService = $siswaService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -23,11 +28,11 @@ class SiswaController extends Controller
             $query->where('nama_lengkap', 'like', '%' . $request->search . '%');
         }
 
-        $siswas = $query->get();
+        $perPage = $request->input('per_page', 10);
+        $siswas = $query->paginate($perPage); // Check view for links()
 
         return view('siswas.index', compact('siswas'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +42,6 @@ class SiswaController extends Controller
         $kelas = Kelas::all();
         return view('siswas.create', compact('kelas'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -76,22 +80,10 @@ class SiswaController extends Controller
             'foto'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], $messages);
 
-        // format no_wa otomatis 085785751176 => 0857-8575-1176
-        $noWa = preg_replace('/\D/', '', $request->no_wa); // ambil hanya angka
-        $data['no_wa'] = substr($noWa, 0, 4) . '-' . substr($noWa, 4, 4) . '-' . substr($noWa, 8);
-
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('fotos', 'public');
-        } else {
-            $data['foto'] = 'fotos/default.png';
-        }
-
-        Siswa::create($data);
+        $this->siswaService->createSiswa($data); // Service handles formatting number and saving file
 
         return redirect()->route('siswas.index')->with('success', 'Siswa berhasil ditambahkan');
     }
-    
-
 
     /**
      * Display the specified resource.
@@ -108,7 +100,7 @@ class SiswaController extends Controller
     public function edit($id)
     {
         $siswa = Siswa::findOrFail($id);
-        $kelas = Kelas::all(); // ini penting, biar bukan string
+        $kelas = Kelas::all();
         return view('siswas.edit', compact('siswa', 'kelas'));
     }
 
@@ -141,11 +133,7 @@ class SiswaController extends Controller
                 'foto.max' => 'Ukuran foto tidak boleh lebih dari 2MB.',
             ]);
 
-            if ($request->hasFile('foto')) {
-                $data['foto'] = $request->file('foto')->store('fotos', 'public');
-            }
-
-            $siswa->update($data);
+            $this->siswaService->updateSiswa($siswa, $data); // Service handles file replacement
 
             return redirect()->route('siswas.index')->with('success', 'Siswa berhasil diperbarui');
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -158,10 +146,7 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        if ($siswa->foto && Storage::disk('public')->exists($siswa->foto)) {
-            Storage::disk('public')->delete($siswa->foto);
-        }
-        $siswa->delete();
+        $this->siswaService->deleteSiswa($siswa);
         return redirect()->route('siswas.index')->with('success', 'Siswa berhasil dihapus.');
     }
 }

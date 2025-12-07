@@ -79,6 +79,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        @include('partials.pagination-bottom', ['data' => $siswas])
                     </div>
                 </div>
             </div>

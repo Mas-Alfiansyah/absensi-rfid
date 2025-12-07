@@ -129,6 +129,8 @@
                     </div>
                 </div>
             </div>
+            
+            @include('partials.pagination-bottom', ['data' => $siswas])
         @else
             <div class="alert alert-warning">Tidak ada data absensi untuk ditampilkan.</div>
         @endif

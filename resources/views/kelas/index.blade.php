@@ -46,7 +46,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama_kelas }}</td>
-                                            <td>{{ $k->deskripsi }}</td>
+                                            <td>Memuat {{ $k->siswas_count }} Siswa di kelas ini</td>
                                             <td class="text-nowrap">
                                                 {{-- <a href="{{ route('kelas.show', $k->id) }}" class="btn btn-info btn-sm">Lihat</a> --}}
                                                 <a href="{{ route('kelas.edit', $k->id) }}"
@@ -64,6 +64,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        @include('partials.pagination-bottom', ['data' => $kelas])
                     </div>
                 </div>
             </div>

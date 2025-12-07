@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Siswa;
+use App\Models\Kelas;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class SiswaFactory extends Factory
 {
@@ -23,40 +23,32 @@ class SiswaFactory extends Factory
      */
     public function definition(): array
     {
-        // Ambil ID kelas secara acak. Asumsi tabel 'kelas' sudah ada datanya.
-        // Jika tabel 'kelas' kosong, ganti dengan 'null' atau ID statis.
-        $kelasId = DB::table('kelas')->inRandomOrder()->value('id');
-
-        // Gunakan Faker untuk menghasilkan data
+        // Faker otomatis menggunakan id_ID jika sudah diatur di config/app.php
         $jenisKelamin = $this->faker->randomElement(['L', 'P']);
 
+        // Memberikan hint gender ke faker agar nama sesuai (Laki-laki/Perempuan)
+        $genderHint = ($jenisKelamin == 'L') ? 'male' : 'female';
+
         return [
-            // Generate UID unik (misalnya, kombinasi tahun dan 5 angka acak)
             'uid' => 'S' . $this->faker->unique()->randomNumber(5, true) . date('Y'),
-            
-            // Generate NISN (10 angka unik)
             'nisn' => $this->faker->unique()->numerify('##########'),
-            
-            // Nama lengkap
-            'nama_lengkap' => $this->faker->name($jenisKelamin == 'L' ? 'male' : 'female'),
-            
-            // Alamat
+
+            // Nama khas Indonesia sesuai gender
+            'nama_lengkap' => $this->faker->name($genderHint),
+
+            // Alamat khas Indonesia (Jl. XXX No. XX)
             'alamat' => $this->faker->address,
-            
-            // Tempat dan Tanggal Lahir
+
+            // Kota-kota di Indonesia (Jakarta, Bandung, Surabaya, dll)
             'tempat_lahir' => $this->faker->city,
             'tanggal_lahir' => $this->faker->date('Y-m-d', '2005-01-01'),
-            
-            // ID Kelas (gunakan ID kelas acak yang sudah ada)
-            'kelas_id' => $kelasId ?? null, 
-            
-            // Jenis Kelamin
+
+            'kelas_id' => Kelas::inRandomOrder()->first()->id ?? Kelas::factory(),
             'jenis_kelamin' => $jenisKelamin,
-            
-            // Nomor WA
-            'no_wa' => $this->faker->numerify('08##########'),
-            
-            // Foto
+
+            // Nomor HP format Indonesia
+            'no_wa' => $this->faker->phoneNumber,
+
             'foto' => 'default.png',
         ];
     }

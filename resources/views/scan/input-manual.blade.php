@@ -15,7 +15,12 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Filter kelas</label>
-                            <input type="text" id="filterKelas" class="form-control" placeholder="Cari kelas...">
+                            <select id="filterKelas" class="form-select">
+                                <option value="">Semua Kelas</option>
+                                @foreach($kelas as $k)
+                                    <option value="{{ strtolower($k->nama_kelas) }}">{{ $k->nama_kelas }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-6  mt-3 gap-3">
                             <a href="{{ route('scan.index') }}" class="btn btn-outline-danger mt-3">
@@ -76,16 +81,25 @@
     <script>
         $(function() {
             // Filter
-            $("#filterNama, #filterKelas").on("keyup", function() {
+            $("#filterNama").on("keyup", filterTable);
+            $("#filterKelas").on("change", filterTable);
+
+            function filterTable() {
                 let nama = $("#filterNama").val().toLowerCase();
-                let kelas = $("#filterKelas").val().toLowerCase();
+                let kelas = $("#filterKelas").val().toLowerCase(); // Value is already lowercased from option value
 
                 $("#siswaTable tbody tr").filter(function() {
-                    let textNama = $(this).find("td:nth-child(1)").text().toLowerCase();
-                    let textKelas = $(this).find("td:nth-child(2)").text().toLowerCase();
-                    $(this).toggle(textNama.indexOf(nama) > -1 && textKelas.indexOf(kelas) > -1);
+                    let textNama = $(this).find("td:nth-child(2)").text().toLowerCase(); // Nama is col 2
+                    let textKelas = $(this).find("td:nth-child(3)").text().toLowerCase(); // Kelas is col 3
+                    
+                    let namaMatch = textNama.indexOf(nama) > -1;
+                    let kelasMatch = (kelas === "") || (textKelas === kelas) || (textKelas.indexOf(kelas) > -1); 
+                    // Strict equality check might fail if table has extra spaces, so indexOf is safer, but dropdown values are exact.
+                    // Updated logic: if dropdown value is part of the cell text.
+                    
+                    $(this).toggle(namaMatch && kelasMatch);
                 });
-            });
+            }
 
             // Fungsi showAlert
             function showAlert(message, type = "success") {

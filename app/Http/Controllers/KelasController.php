@@ -8,22 +8,23 @@ use Illuminate\Http\Request;
 class KelasController extends Controller
 {
     public function index(Request $request)
-{
-    $query = Kelas::query();
+    {
+        $query = Kelas::query()->withCount('siswas');
 
-    // filter nama kalau ada input
-    if ($request->filled('nama')) {
-        $query->where('nama_kelas', 'like', '%' . $request->nama . '%');
+        // filter nama kalau ada input
+        if ($request->filled('nama')) {
+            $query->where('nama_kelas', 'like', '%' . $request->nama . '%');
+        }
+
+        // kalau mau pagination
+        $perPage = $request->input('per_page', 10);
+        $kelas = $query->orderBy('id')->paginate($perPage);
+
+        // kalau mau semua data tanpa pagination → pakai ini
+        // $kelas = $query->orderBy('nama_kelas')->get();
+
+        return view('kelas.index', compact('kelas'));
     }
-
-    // kalau mau pagination
-    $kelas = $query->orderBy('id')->paginate(10);
-
-    // kalau mau semua data tanpa pagination → pakai ini
-    // $kelas = $query->orderBy('nama_kelas')->get();
-
-    return view('kelas.index', compact('kelas'));
-}
 
 
     public function create()

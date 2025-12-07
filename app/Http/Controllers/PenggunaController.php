@@ -20,7 +20,8 @@ class PenggunaController extends Controller
             $query->where('username', 'like', '%' . $request->username . '%');
         }
 
-        $users = $query->latest()->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $users = $query->latest()->paginate($perPage);
 
         return view('pengguna.index', compact('users'));
     }

@@ -11,7 +11,7 @@
                 <div class="card garis shadow-md rounded-4 mb-5">
                     <div class="card-body">
                         <h5 class="mb-4">Filter</h5>
-                        <form id="filter-form" class="row g-2 align-items-end">
+                        <form action="{{ route('laporan.index') }}" method="GET" class="row g-2 align-items-end">
                             <!-- Filter Kelas -->
                             <div class="col-md-2">
                                 <label class="form-label">Kelas</label>
@@ -51,14 +51,13 @@
                             </div>
                             <!-- Filter Nama -->
                             <div class="col-md-3">
-                                <label class="form-label">Nama</label>
                                 <input type="text" name="nama" class="form-control" placeholder="Cari nama..."
                                     value="{{ request('nama') }}">
                             </div>
 
                             <!-- Tombol -->
                             <div class="col-md-3 d-flex justify-content-center mt-3 gap-2">
-                                <button type="button" onclick="resetFilter()" class="btn btn-danger">Reset</button>
+                                <a href="{{ route('laporan.index') }}" class="btn btn-danger">Reset</a>
                                 <button type="submit" class="btn btn-primary">Filter</button>
                             </div>
                         </form>
@@ -122,72 +121,11 @@
                                 </div>
                             @endif
                         </div>
+                        
+                        @include('partials.pagination-bottom', ['data' => $siswas])
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <script>
-        document.getElementById('filter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Show loading state
-            const laporanData = document.getElementById('laporan-data');
-            laporanData.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2 text-muted">Memuat data...</p>
-                </div>
-            `;
-
-            let params = new URLSearchParams(new FormData(this)).toString();
-
-            fetch("{{ route('laporan.data') }}?" + params)
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return res.text();
-                })
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newContent = doc.getElementById('laporan-data');
-
-                    if (newContent) {
-                        laporanData.innerHTML = newContent.innerHTML;
-                    } else {
-                        laporanData.innerHTML = `
-                            <div class="alert alert-danger text-center">
-                                <p class="mb-0">Terjadi kesalahan saat memuat data.</p>
-                            </div>
-                        `;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    laporanData.innerHTML = `
-                        <div class="alert alert-danger text-center">
-                            <p class="mb-0">Terjadi kesalahan saat memuat data.</p>
-                        </div>
-                    `;
-                });
-        });
-
-        function resetFilter() {
-            document.getElementById('filter-form').reset();
-            document.getElementById('filter-form').dispatchEvent(new Event('submit'));
-        }
-
-        // Submit form on page load if there are filter parameters
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.toString()) {
-                document.getElementById('filter-form').dispatchEvent(new Event('submit'));
-            }
-        });
-    </script>
 @endsection

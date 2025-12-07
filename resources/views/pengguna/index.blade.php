@@ -16,6 +16,8 @@
                                     placeholder="Cari nama...">
                             </div>
 
+                            @include('partials.per-page')
+
                             <div class="col-md-6 d-flex justify-content-center mt-3 gap-3">
                                 <button type="submit" class="btn btn-success">Filter</button>
                                 <a href="{{ route('pengguna.index') }}" class="btn btn-danger">Reset</a>
@@ -75,7 +77,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ $users->links() }}
+                        @include('partials.pagination-bottom', ['data' => $users])
                     </div>
                 </div>
             </div>
