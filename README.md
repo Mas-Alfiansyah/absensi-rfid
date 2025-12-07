@@ -32,7 +32,6 @@ Aplikasi sistem absensi berbasis RFID yang dikembangkan menggunakan framework La
 Jika Anda baru saja mengkloning repositori ini, jalankan perintah berikut untuk menginstal dependensi:
 
 ```bash
-# <p style="font-family: lucida console;">&lt;input type="password"&gt;</p>
 composer install
 cp .env.example .env
 php artisan key:generate
