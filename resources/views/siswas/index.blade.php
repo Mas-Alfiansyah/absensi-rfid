@@ -51,7 +51,7 @@
                                 <tbody class="text-center">
                                     @forelse($siswas as $siswa)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $siswas->firstItem() + $loop->index }}</td>
                                             <td>{{ $siswa->nama_lengkap }}</td>
                                             <td>{{ $siswa->kelas->nama_kelas ?? '-' }}</td>
                                             <td>{{ $siswa->nisn }}</td>
