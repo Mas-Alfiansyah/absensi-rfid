@@ -69,6 +69,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" onclick="hapusPengguna({{ $siswa->id }})">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @empty
