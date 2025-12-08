@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('pengguna', PenggunaController::class);
     Route::resource('kelas', KelasController::class);
+
+    // Transisi Tahun Ajaran (Harus sebelum resource siswas)
+    Route::post('siswas/transisi', [SiswaController::class, 'transisi'])->name('siswas.transisi');
+    Route::post('siswas/promote', [SiswaController::class, 'promote'])->name('siswas.promote');
     Route::resource('siswas', SiswaController::class);
 
     Route::resource('kelas', KelasController::class)->parameters([
@@ -57,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/absensi/export/excel', [AbsensiController::class, 'exportExcel'])->name('absensi.export.excel');
     Route::get('/absensi/export/pdf', [AbsensiController::class, 'exportPdf'])->name('absensi.export.pdf');
 
+    Route::get('/alumni', [App\Http\Controllers\AlumniController::class, 'index'])->name('alumni.index');
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/data', [LaporanController::class, 'data'])->name('laporan.data');
 });

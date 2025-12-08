@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Services\SiswaService;
+use App\Services\AcademicService;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
     protected $siswaService;
+    protected $academicService;
 
-    public function __construct(SiswaService $siswaService)
+    public function __construct(SiswaService $siswaService, AcademicService $academicService)
     {
         $this->siswaService = $siswaService;
+        $this->academicService = $academicService;
     }
 
     /**
@@ -21,17 +24,25 @@ class SiswaController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Siswa::with('kelas');
+        // Only show active students
+        $query = Siswa::where('status', 'aktif')->with('kelas');
 
         // filter by nama_lengkap
         if ($request->has('search') && $request->search != '') {
             $query->where('nama_lengkap', 'like', '%' . $request->search . '%');
+            $query->where('nama_lengkap', 'like', '%' . $request->search . '%');
+        }
+
+        // filter by kelas_id
+        if ($request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
         }
 
         $perPage = $request->input('per_page', 10);
         $siswas = $query->paginate($perPage); // Check view for links()
+        $kelas = Kelas::all(); // Untuk dropdown filter dan modal
 
-        return view('siswas.index', compact('siswas'));
+        return view('siswas.index', compact('siswas', 'kelas'));
     }
 
     /**
@@ -148,5 +159,67 @@ class SiswaController extends Controller
     {
         $this->siswaService->deleteSiswa($siswa);
         return redirect()->route('siswas.index')->with('success', 'Siswa berhasil dihapus.');
+    }
+
+    public function transisi(Request $request)
+    {
+        // Validasi, setidaknya salah satu array harus ada
+        // promotion_map: array [old_nama_kelas => new_nama_kelas]
+        // graduating_classes: array [nama_kelas]
+
+        $promotionMapping = $request->input('promotion_map', []);
+        $graduatingClasses = $request->input('graduating_classes', []);
+
+        // Filter out empty values (e.g. if user selected "Pilih Kelas" which acts as null)
+        $promotionMapping = array_filter($promotionMapping, function ($val, $key) {
+            return !empty($val) && !empty($key);
+        }, ARRAY_FILTER_USE_BOTH);
+
+        if (empty($promotionMapping) && empty($graduatingClasses)) {
+            return redirect()->back()->with('error', 'Tidak ada perubahan yang dipilih.');
+        }
+
+        try {
+            $result = $this->academicService->transisiTahunAjaran($promotionMapping, $graduatingClasses);
+
+            $msg = "Transisi berhasil. ";
+            if ($result['promoted_count'] > 0) $msg .= "Naik kelas: " . $result['promoted_count'] . ". ";
+            if ($result['graduated_count'] > 0) $msg .= "Lulus: " . $result['graduated_count'] . ". ";
+
+            if (!empty($result['errors'])) {
+                return redirect()->back()->with('warning', $msg . ' Peringatan: ' . implode(', ', $result['errors']));
+            }
+
+            return redirect()->route('siswas.index')->with('success', $msg);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    public function promote(Request $request)
+    {
+        $request->validate([
+            'student_ids' => 'required|array',
+            'student_ids.*' => 'exists:siswas,id',
+            'action_type' => 'required|in:promote,graduate',
+            'target_kelas_id' => 'required_if:action_type,promote|nullable|exists:kelas,id',
+        ]);
+
+        $studentIds = $request->input('student_ids');
+        $actionType = $request->input('action_type');
+        $targetClassId = $request->input('target_kelas_id');
+
+        if ($actionType === 'graduate') {
+            $targetClassId = null;
+        }
+
+        try {
+            $count = $this->academicService->promoteStudents($studentIds, $targetClassId);
+            $msg = $actionType === 'promote' ? "$count siswa berhasil dinaikkan kelas." : "$count siswa berhasil diluluskan.";
+
+            return redirect()->back()->with('success', $msg);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memproses: ' . $e->getMessage());
+        }
     }
 }
