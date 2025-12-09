@@ -38,4 +38,10 @@ class AlumniController extends Controller
 
         return view('alumni.index', compact('siswas', 'tahunLulusOptions'));
     }
+
+    public function show($id)
+    {
+        $siswa = Siswa::where('status', 'alumni')->findOrFail($id);
+        return view('alumni.show', compact('siswa'));
+    }
 }

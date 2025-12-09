@@ -56,7 +56,7 @@
                             </div>
 
                             <!-- Tombol -->
-                            <div class="col-md-3 d-flex justify-content-center mt-3 gap-2">
+                            <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center mt-3 gap-2">
                                 <a href="{{ route('laporan.index') }}" class="btn btn-danger">Reset</a>
                                 <button type="submit" class="btn btn-primary">Filter</button>
                             </div>
@@ -121,7 +121,7 @@
                                 </div>
                             @endif
                         </div>
-                        
+
                         @include('partials.pagination-bottom', ['data' => $siswas])
                     </div>
                 </div>

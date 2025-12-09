@@ -27,9 +27,9 @@
                             </div>
 
                             <!-- Tombol Aksi -->
-                            <div class="text-end mt-4">
-                                <a href="{{ route('kelas.index') }}" class="btn btn-outline-danger px-4">Batal</a>
+                            <div class="text-end mt-4 d-flex justify-content-start flex-column flex-md-row gap-2">
                                 <button type="submit" class="btn btn-success px-4">Simpan</button>
+                                <a href="{{ route('kelas.index') }}" class="btn btn-outline-danger px-4">Batal</a>
                             </div>
                         </form>
                     </div>

@@ -26,7 +26,7 @@
                                 <!-- Kolom Foto (di dalam form) -->
                                 <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
                                     <div class="text-center w-100">
-                                        <div class="mb-3"
+                                        <div class="mb-3 w-auto"
                                             style="width: 300px; height: 400px; margin: 0 auto; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
                                             <img id="preview" src="{{ asset('storage/fotos/default.png') }}"
                                                 style="width: 100%; height: 100%; object-fit: cover;">
@@ -178,15 +178,15 @@
         // Fungsi untuk auto dismiss alert dengan efek fade out yang mulus
         document.addEventListener('DOMContentLoaded', function() {
             const alerts = document.querySelectorAll('.auto-dismiss');
-            
+
             alerts.forEach(function(alert) {
                 // Tambahkan class untuk transition
                 alert.classList.add('fade-out');
-                
+
                 setTimeout(function() {
                     // Trigger fade out effect
                     alert.classList.add('hide');
-                    
+
                     // Hapus element dari DOM setelah transition selesai
                     setTimeout(function() {
                         alert.remove();

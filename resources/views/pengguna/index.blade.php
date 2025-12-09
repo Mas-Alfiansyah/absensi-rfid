@@ -18,11 +18,11 @@
 
                             @include('partials.per-page')
 
-                            <div class="col-md-6 d-flex justify-content-center mt-3 gap-3">
+                            <div class="col-md-5 d-flex flex-column flex-md-row justify-content-start mt-3 gap-3">
                                 <button type="submit" class="btn btn-success">Filter</button>
                                 <a href="{{ route('pengguna.index') }}" class="btn btn-danger">Reset</a>
                                 <a href="{{ route('pengguna.create') }}" class="btn btn-primary">Add Data</a>
-                            </div> 
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -83,6 +83,4 @@
             </div>
         </div>
     </main>
-
-
 @endsection

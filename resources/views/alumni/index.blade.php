@@ -39,8 +39,8 @@
                             </div>
 
                             <!-- Tombol -->
-                            <div class="col-md-3 d-flex justify-content-start gap-2">
-                                <button type="submit" class="btn btn-success w-100">Filter</button>
+                            <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center mt-3 gap-3 ">
+                                <button type="submit" class="btn btn-success">Filter</button>
                                 <a href="{{ route('alumni.index') }}" class="btn btn-danger">Reset</a>
                             </div>
                         </form>
@@ -72,7 +72,7 @@
                                             <td>{{ $siswa->kelas_terakhir ?? '-' }}</td>
                                             <td>{{ $siswa->tahun_lulus ?? '-' }}</td>
                                             <td>
-                                                <a href="{{ route('siswas.show', $siswa->id) }}"
+                                                <a href="{{ route('alumni.show', $siswa->id) }}"
                                                     class="btn btn-sm btn-warning">Lihat</a>
                                             </td>
                                         </tr>

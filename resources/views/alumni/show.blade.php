@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Lihat Siswa')
+@section('title', 'Lihat Alumni')
 
 @section('content')
     <main>
         <div class="body-wrapper-inner">
             <div class="container-fluid">
-                <h1 class="fw-bold mb-4 text-left">Lihat Data Siswa</h1>
+                <h1 class="fw-bold mb-4 text-left">Lihat Data Alumni</h1>
                 <div class="card shadow-lg border-0 rounded-4">
                     <div class="card-body p-4">
                         <div class="row g-0">
-                            <!-- Kolom Foto (di dalam form) -->
+                            <!-- Kolom Foto -->
                             <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
                                 <div class="text-center w-100">
                                     <div class="mb-3 w-auto"
@@ -61,8 +61,15 @@
 
                                     <div class="mb-3">
                                         <div class="list-group-item d-flex justify-content-between align-items-center">
-                                            <span><strong>Kelas :</strong>
-                                                {{ optional($siswa->kelas)->nama_kelas ?? '-' }}</span>
+                                            <span><strong>Kelas Terakhir :</strong>
+                                                {{ $siswa->kelas_terakhir ?? '-' }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span><strong>Tahun Lulus :</strong>
+                                                {{ $siswa->tahun_lulus ?? '-' }}</span>
                                         </div>
                                     </div>
 
@@ -79,9 +86,8 @@
                                     </div>
 
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                        <a href="{{ route('siswas.index') }}"
-                                            class="btn btn-outline-secondary me-md-2">kembali</a>
-                                        <button type="submit" class="btn btn-primary">Simpan Data</button>
+                                        <a href="{{ route('alumni.index') }}"
+                                            class="btn btn-outline-secondary me-md-2">Kembali</a>
                                     </div>
                                 </div>
                             </div>

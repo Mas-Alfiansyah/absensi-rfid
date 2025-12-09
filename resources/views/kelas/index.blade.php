@@ -14,11 +14,12 @@
                             <!-- Filter Nama -->
                             <div class="col-md-4">
                                 <label class="form-label">Nama</label>
-                                <input type="text" name="nama" class="form-control" value="{{ request('nama') }}" placeholder="Cari nama...">
+                                <input type="text" name="nama" class="form-control" value="{{ request('nama') }}"
+                                    placeholder="Cari nama...">
                             </div>
 
                             <!-- Tombol -->
-                            <div class="col-md-4 d-flex justify-content-center mt-3 gap-3">
+                            <div class="col-md-4 d-flex justify-content-start flex-column flex-md-row mt-3 gap-3">
                                 <button type="submit" class="btn btn-success">Filter</button>
                                 <a href="{{ route('kelas.index') }}" class="btn btn-danger">Reset</a>
                                 <a href="{{ route('kelas.create') }}" type="button" class="btn btn-primary">Tambah Data</a>

@@ -9,8 +9,8 @@
 
                     <!-- Sampul -->
                     <div class="position-relative text-center">
-                        <img src="{{ asset('assets/images/backgrounds/user-info.jpg') }}" alt="Cover" class="w-100 rounded-4"
-                            style="object-fit: cover; height: 250px;">
+                        <img src="{{ asset('assets/images/backgrounds/user-info.jpg') }}" alt="Cover"
+                            class="w-100 rounded-4" style="object-fit: cover; height: 250px;">
 
                         <!-- Icon Edit Sampul -->
                         <label for="editCover"
@@ -24,8 +24,7 @@
                         <div class="position-absolute start-50 translate-middle" style="bottom: -150px;">
                             <div class="position-relative d-inline-block">
                                 <img src="{{ asset('assets/images/profile/user-1.jpg') }}" alt="Foto Profil"
-                                    class="rounded-circle border border-white shadow" width="150"
-                                    height="150">
+                                    class="rounded-circle border border-white shadow" width="150" height="150">
 
                                 <!-- Icon Edit Foto Profil -->
                                 <label for="editProfile"
@@ -64,9 +63,12 @@
                             <label class="form-label">Role</label>
                             <select class="form-select" name="role" required>
                                 <option value="admin" {{ $pengguna->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="kepala sekolah" {{ $pengguna->role == 'kepala sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
-                                <option value="guru agama" {{ $pengguna->role == 'guru agama' ? 'selected' : '' }}>GuruAgama</option>
-                                <option value="guru matematika"{{ $pengguna->role == 'guru matematika' ? 'selected' : '' }}>Guru Matematika</option>
+                                <option value="kepala sekolah" {{ $pengguna->role == 'kepala sekolah' ? 'selected' : '' }}>
+                                    Kepala Sekolah</option>
+                                <option value="guru agama" {{ $pengguna->role == 'guru agama' ? 'selected' : '' }}>GuruAgama
+                                </option>
+                                <option value="guru matematika"{{ $pengguna->role == 'guru matematika' ? 'selected' : '' }}>
+                                    Guru Matematika</option>
                             </select>
                         </div>
 
@@ -82,9 +84,9 @@
                         </div> --}}
 
                         <!-- Tombol Aksi -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('pengguna.index') }}" class="btn btn-outline-danger px-4">Kembali</a>
+                        <div class="d-flex justify-content-start flex-column flex-md-row gap-2 mt-4">
                             <button type="submit" class="btn btn-success px-4">Simpan Perubahan</button>
+                            <a href="{{ route('pengguna.index') }}" class="btn btn-outline-danger px-4">Kembali</a>
                         </div>
                     </form>
                 </div>

@@ -28,7 +28,7 @@ class LaporanController extends Controller
         $kelas = Kelas::all();
 
         // Query Siswa directly with Filters
-        $query = Siswa::query()->with('kelas');
+        $query = Siswa::query()->where('status', '!=', 'alumni')->with('kelas');
 
         // Filter Kelas
         if ($request->filled('kelas_id')) {

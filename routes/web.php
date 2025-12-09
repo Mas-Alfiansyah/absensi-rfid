@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/absensi/export/pdf', [AbsensiController::class, 'exportPdf'])->name('absensi.export.pdf');
 
     Route::get('/alumni', [App\Http\Controllers\AlumniController::class, 'index'])->name('alumni.index');
+    Route::get('/alumni/{id}', [App\Http\Controllers\AlumniController::class, 'show'])->name('alumni.show');
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/data', [LaporanController::class, 'data'])->name('laporan.data');
 });

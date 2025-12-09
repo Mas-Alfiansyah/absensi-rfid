@@ -30,24 +30,38 @@
                         <input type="date" name="end_date" class="form-control" value="{{ $end_date }}">
                     </div>
 
-                    <div class="col-md-4">
+                    <div
+                        class="col-md-6 d-flex flex-column flex-md-row justify-content-center 
+            align-items-start align-items-md-center mt-3 gap-2">
+
                         <label>&nbsp;</label>
-                        <div>
-                            <button type="submit" class="btn btn-success">Filter</button>
-                            <a href="{{ route('absensi.review') }}" class="btn btn-danger">Reset</a>
-                            <a href="{{ route('absensi.index') }}" class="btn btn-outline-danger">Kembali</a>
+
+                        <div class="d-flex flex-column flex-md-row gap-2 w-100 w-md-auto">
+                            <button type="submit" class="btn btn-success w-100 w-md-auto">Filter</button>
+                            <a href="{{ route('absensi.review') }}" class="btn btn-danger w-100 w-md-auto">Reset</a>
+                            <a href="{{ route('absensi.index') }}"
+                                class="btn btn-outline-danger w-100 w-md-auto">Kembali</a>
                         </div>
                     </div>
+
+
                     @if ($siswas->count() > 0)
-                        <div class="col-md-6  mt-3 gap-3">
-                            <a href="{{ route('absensi.export.excel', request()->query()) }}"class="btn btn-success">
+                        <div
+                            class="col-md-6 d-flex flex-column flex-md-row justify-content-center 
+                align-items-start align-items-md-center mt-3 gap-2">
+
+                            <a href="{{ route('absensi.export.excel', request()->query()) }}"
+                                class="btn btn-success d-flex justify-content-center align-items-center gap-1 w-100 w-md-auto">
                                 <i class="fas fa-file-excel"></i> Ekspor Excel
                             </a>
-                            <a href="{{ route('absensi.export.pdf', request()->query()) }}" class="btn btn-danger">
+
+                            <a href="{{ route('absensi.export.pdf', request()->query()) }}"
+                                class="btn btn-danger d-flex justify-content-center align-items-center gap-1 w-100 w-md-auto">
                                 <i class="fas fa-file-pdf"></i> Ekspor PDF
                             </a>
                         </div>
                     @endif
+
                     <h5 class="text-warning">Warning</h5>
                     <ul class="mt-1">
                         <li>1. Sebelum Export mohon pilih kelasnya terlebih dahulu</li>
@@ -129,7 +143,7 @@
                     </div>
                 </div>
             </div>
-            
+
             @include('partials.pagination-bottom', ['data' => $siswas])
         @else
             <div class="alert alert-warning">Tidak ada data absensi untuk ditampilkan.</div>

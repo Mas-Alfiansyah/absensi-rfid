@@ -33,7 +33,7 @@
                             </div>
 
                             <!-- Tombol -->
-                            <div class="col-md-4 d-flex justify-content-center mt-3 gap-3">
+                            <div class="col-md-6 d-flex flex-column flex-md-row justify-content-center mt-3 gap-3 ">
                                 <button type="submit" class="btn btn-success">Filter</button>
                                 <a href="{{ route('siswas.index') }}" class="btn btn-danger">Reset</a>
                                 <a href="{{ route('siswas.create') }}" type="button" class="btn btn-primary">Tambah
@@ -163,9 +163,9 @@
 
                     <!-- Form Controls connected to the main form via JS or just Put inputs here and append to main form on submit? -->
                     <!-- Easiest: The inputs here are technically outside the form #bulkForm.
-                                             We should put these inputs INSIDE #bulkForm? No, #bulkForm wraps the table.
-                                             We can make the button "Simpan" in this modal submit #bulkForm, but we need to inject the extra data (action_type, target_kelas_id) into #bulkForm.
-                                        -->
+                                                                     We should put these inputs INSIDE #bulkForm? No, #bulkForm wraps the table.
+                                                                     We can make the button "Simpan" in this modal submit #bulkForm, but we need to inject the extra data (action_type, target_kelas_id) into #bulkForm.
+                                                                -->
 
                     <div class="mb-3">
                         <label class="form-label d-block">Pilih Aksi</label>

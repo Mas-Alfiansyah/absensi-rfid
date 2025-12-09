@@ -9,10 +9,10 @@
                 <h1 class="fw-bold mb-4 text-left">Tambah Data Kelas</h1>
 
                 <div class="card shadow-lg border-0 rounded-4">
-                    <div class="card-body p-4">
+                    <div class="card-body p-4 w-auto">
                         <form action="{{ route('kelas.store') }}" method="POST">
                             @csrf
-                            <div class="row g-4">
+                            <div class="column g-5">
                                 <!-- Input Kelas -->
                                 <div class="col-md-6">
                                     <label class="form-label">Nama Kelas</label>
@@ -21,16 +21,16 @@
                                 </div>
 
                                 <!-- Input Deskripsi -->
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="form-label">Deskripsi</label>
                                     <textarea name="deskripsi" class="form-control" rows="3" placeholder="Tuliskan deskripsi kelas...">{{ old('deskripsi') }}</textarea>
                                 </div>
                             </div>
 
                             <!-- Tombol Aksi -->
-                            <div class="text-end mt-4">
-                                <a href="{{ route('kelas.index') }}" class="btn btn-outline-danger px-4">Batal</a>
+                            <div class="text-end mt-4 d-flex justify-content-start flex-column flex-md-row gap-2">
                                 <button type="submit" class="btn btn-success px-4">Simpan</button>
+                                <a href="{{ route('kelas.index') }}" class="btn btn-outline-danger px-4">Batal</a>
                             </div>
                         </form>
                     </div>

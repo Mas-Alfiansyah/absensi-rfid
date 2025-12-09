@@ -11,7 +11,10 @@ class AbsensiService
 {
     public function getAbsensiList(array $filters, int $perPage = 10)
     {
-        $query = Scan::with(['siswa.kelas']);
+        $query = Scan::with(['siswa.kelas'])
+            ->whereHas('siswa', function ($q) {
+                $q->where('status', '!=', 'alumni');
+            });
         $today = Carbon::today('Asia/Jakarta');
 
         // Filter kelas
@@ -90,7 +93,7 @@ class AbsensiService
 
         $query = Siswa::with(['kelas', 'scans' => function ($query) use ($start_date, $end_date) {
             $query->whereBetween('tanggal', [$start_date, $end_date]);
-        }]);
+        }])->where('status', '!=', 'alumni');
 
         if (isset($filters['kelas_id']) && $filters['kelas_id']) {
             $query->where('kelas_id', $filters['kelas_id']);
